@@ -44,7 +44,7 @@ public class JdbcConfig {
 			logger.error("jdbc配置文件不存在");
 			e.printStackTrace();
 		} catch (IOException e) {
-			logger.error("加载配置文件失败");
+			logger.error("加载jdbc配置文件失败");
 			e.printStackTrace();
 		}
 	}

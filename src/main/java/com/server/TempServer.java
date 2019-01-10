@@ -53,7 +53,6 @@ public class TempServer {
 				humanPictures.add(humanPicture);
 			}
 			
-			
 			new DbHelp().storageInfoToDB(wifis, humanPictures, wifi_device_id, video_device_id);
 		}
 		
