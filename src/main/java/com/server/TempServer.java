@@ -11,11 +11,11 @@ import java.util.List;
 
 import com.pojo.HumanPicture;
 import com.pojo.Wifi;
+import com.service.DbHelp;
 
-public class Temp_Server {
+public class TempServer {
 
 	private String inputFile = "E:\\北大杭研院\\专利\\视觉信号与无线信号的跟踪定位方法\\模拟输入\\input.txt";
-	
 	
 	public void temp_server() throws IOException{
 		BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(inputFile)));
@@ -44,6 +44,7 @@ public class Temp_Server {
 			
 			int video_device_id = Integer.parseInt(intput_split[i++]);
 			
+			i ++;
 			for(; i < intput_split.length; i ++) {
 				HumanPicture humanPicture = new HumanPicture();
 				humanPicture.setDevice_id(video_device_id);
@@ -52,8 +53,13 @@ public class Temp_Server {
 				humanPictures.add(humanPicture);
 			}
 			
+			new DbHelp().storageInfoToDB(wifis, humanPictures);
 		}
 		
 		bufferedReader.close();
+	}
+	
+	public static void main(String [] args) throws IOException {
+		new TempServer().temp_server();
 	}
 }

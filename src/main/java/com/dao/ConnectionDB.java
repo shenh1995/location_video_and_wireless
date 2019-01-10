@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.config.Jdbc_Config;
+import com.config.JdbcConfig;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public class ConnectionDB {
@@ -14,10 +14,10 @@ public class ConnectionDB {
 	public static Connection getConnection() throws SQLException, PropertyVetoException {
 		
 		ComboPooledDataSource comb = new ComboPooledDataSource();
-		comb.setDriverClass(Jdbc_Config.jdbc_driver);
-		comb.setJdbcUrl(Jdbc_Config.jdbc_url);
-		comb.setUser(Jdbc_Config.jdbc_user);
-		comb.setPassword(Jdbc_Config.jdbc_password);
+		comb.setDriverClass(JdbcConfig.jdbc_driver);
+		comb.setJdbcUrl(JdbcConfig.jdbc_url);
+		comb.setUser(JdbcConfig.jdbc_user);
+		comb.setPassword(JdbcConfig.jdbc_password);
 		
 		Connection connection = comb.getConnection();
 		

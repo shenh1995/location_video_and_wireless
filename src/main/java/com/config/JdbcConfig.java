@@ -7,7 +7,7 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-public class Jdbc_Config {
+public class JdbcConfig {
 	
 	public static String jdbc_driver = "";
 	public static String jdbc_user = "";
@@ -22,11 +22,11 @@ public class Jdbc_Config {
 
 	private static Properties jdbcConfig = new Properties();
 	
-	private static Logger logger = Logger.getLogger(Jdbc_Config.class);
+	private static Logger logger = Logger.getLogger(JdbcConfig.class);
 	
 	static {
 		try {
-			InputStream jdbc_Config_File = Jdbc_Config.class.getClassLoader().getResourceAsStream("jdbc.properties");
+			InputStream jdbc_Config_File = JdbcConfig.class.getClassLoader().getResourceAsStream("jdbc.properties");
 			jdbcConfig.load(jdbc_Config_File);
 			
 			jdbc_driver = jdbcConfig.getProperty("jdbc.driver");
