@@ -1,0 +1,11 @@
+mysql:
+  image: mysql:5.7
+  ports:
+  - "3308:3306"
+  environment:
+    MYSQL_DATABASE: location_video_and_wireless
+    MYSQL_ROOT_PASSWORD: shenhong951015
+redis:
+  image: redis:alpine
+  ports:
+  - "6379:6379"
