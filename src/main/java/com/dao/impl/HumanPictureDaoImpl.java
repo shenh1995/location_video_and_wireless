@@ -43,5 +43,4 @@ public class HumanPictureDaoImpl implements HumanPictureDao{
 			e.printStackTrace();
 		}
 	}
-
 }
