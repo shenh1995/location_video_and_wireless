@@ -4,11 +4,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.algorithm.CrossCalculate;
 import com.pojo.HumanPicture;
 import com.pojo.Wifi;
 import com.service.DbHelp;
@@ -17,7 +19,7 @@ public class TempServer {
 
 	private String inputFile = "E:\\北大杭研院\\专利\\视觉信号与无线信号的跟踪定位方法\\模拟输入\\input.txt";
 	
-	public void temp_server() throws IOException{
+	public void temp_server() throws IOException, SQLException{
 		BufferedReader bufferedReader = new BufferedReader(new FileReader(new File(inputFile)));
 		
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -29,6 +31,7 @@ public class TempServer {
 			
 			List<Wifi> wifis = new ArrayList<Wifi>();
 			List<HumanPicture> humanPictures = new ArrayList<HumanPicture>();
+			List<String> mac_names = new ArrayList<String>();
 			
 			int wifi_device_id = Integer.parseInt(intput_split[0]);
 			int wifi_mac_num = Integer.parseInt(intput_split[1]);
@@ -40,9 +43,11 @@ public class TempServer {
 				wifi.setMac_name(intput_split[i]);
 				wifi.setTime(df.format(new Date()));
 				wifis.add(wifi);
+				mac_names.add(intput_split[i]);
 			}
 			
 			int video_device_id = Integer.parseInt(intput_split[i++]);
+			String new_pictures = "";
 			
 			i ++;
 			for(; i < intput_split.length; i ++) {
@@ -51,15 +56,17 @@ public class TempServer {
 				humanPicture.setPicture_path(intput_split[i]);
 				humanPicture.setTime(df.format(new Date()));
 				humanPictures.add(humanPicture);
+				new_pictures += intput_split[i] + "\t";
 			}
 			
 			new DbHelp().storageInfoToDB(wifis, humanPictures, wifi_device_id, video_device_id);
+			new CrossCalculate().getCrossResult(mac_names, new_pictures.substring(0, new_pictures.length() - 1));
 		}
 		
 		bufferedReader.close();
 	}
 	
-	public static void main(String [] args) throws IOException {
+	public static void main(String [] args) throws IOException, SQLException {
 		new TempServer().temp_server();
 	}
 }

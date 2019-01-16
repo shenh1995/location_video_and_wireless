@@ -50,7 +50,7 @@ public class ResultDaoImpl implements ResultDao{
 			}
 			psts.executeBatch();
 			
-			logger.info("批量插入Result成功");
+			logger.info("批量插入Result成功:" + mac_name_map_picture_paths.keySet());
 			
 		} catch (Exception e) {
 			logger.error("批量插入Result失败");
@@ -76,10 +76,9 @@ public class ResultDaoImpl implements ResultDao{
 		    	psts.setInt(3, 0);
 		    	psts.addBatch();
 			}
-		    
 		    psts.executeBatch();
 
-		    logger.info("插入未生效的Result成功");
+		    logger.info("插入未生效的Result成功:" + mac_names.toString());
 			
 		} catch (Exception e) {
 			logger.error("插入未生效的Result失败");
@@ -103,10 +102,9 @@ public class ResultDaoImpl implements ResultDao{
 				psts.setString(1, mac_name);
 				psts.addBatch();
 			}
-			
 			psts.executeBatch();
 			
-			logger.info("批量删除result成功");
+			logger.info("批量删除result成功:" + mac_names.toString());
 			
 		} catch (Exception e) {
 			logger.error("批量删除result失败");
@@ -123,9 +121,7 @@ public class ResultDaoImpl implements ResultDao{
 			connection = ConnectionDB.getConnection();
 			
 			String insert_result_sql = "insert into Result (mac_name, picture_paths, status) values(?,?,?)";
-			
 			psts = connection.prepareStatement(insert_result_sql);
-			
 			psts.setString(1, mac_name);
 			psts.setString(2, picture_paths);
 			psts.setInt(3, status);
@@ -143,7 +139,6 @@ public class ResultDaoImpl implements ResultDao{
 	}
 
 	public List<Result> getResults(List<String> mac_names) throws SQLException{
-		
 		Connection connection = null;
 		PreparedStatement psts = null;
 		
@@ -160,7 +155,6 @@ public class ResultDaoImpl implements ResultDao{
 			mac_names.get(mac_names.size() - 1) + ")";
 			
 			psts = connection.prepareStatement(query_result_sql);
-			
 			ResultSet rs = psts.executeQuery();
 
 			while (rs.next()) {

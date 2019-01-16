@@ -23,11 +23,4 @@ public class DbHelp {
 		pictureAndWifiDao.insertRelationVideoDeviceidAndWifiId(wifi_device_id, video_device_id);
 	}
 
-	public void insertIntoResult(String mac_name, String picture_paths) {
-		
-	}
-	
-	public void batchInsertIntoResult(List<String> mac_names, List<String> picture_paths) {
-		
-	}
 }

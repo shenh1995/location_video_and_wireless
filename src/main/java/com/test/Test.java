@@ -17,13 +17,13 @@ public class Test {
 		Jedis jedis = new Jedis(RedisConfig.redis_host, RedisConfig.port);
 		
 		List<String> paths = new ArrayList<String>();
-		paths.add("python");
-		paths.add("java");
 		
-		jedis.set("java", paths.toString());
+		jedis.set("java", "python");
+		jedis.set("java", "test");
 		
+		jedis.flushAll();
+
 		System.out.println(jedis.get("java"));
-		
 		jedis.close();
 		
 		logger.debug("测试成功");

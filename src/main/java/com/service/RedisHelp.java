@@ -2,7 +2,9 @@ package com.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 import redis.clients.jedis.Jedis;
@@ -35,68 +37,46 @@ public class RedisHelp {
 		tmp_redis.close();
 		return picturePathHashMap;
 	}
+	
+	public void delKeys(List<String> mac_names) {
+		Jedis tmp_redis = ConnectionRedis.getJedis();
+		
+		for (String mac_name : mac_names) {
+			if (tmp_redis.get(mac_name) != null) {
+				tmp_redis.del(mac_name);
+			}
+		}
+		
+		logger.info("删除keys:" + mac_names.toString() + "成功");
+		tmp_redis.close();
+	}
+	
+	public void insertKeys(HashMap<String, String> mac_name_map_picture_paths) {
+		Jedis tmp_redis = ConnectionRedis.getJedis();
 
-	public String getPicturePathsByMacName(String mac_name) {
+		Iterator<?> iterator = mac_name_map_picture_paths.entrySet().iterator();
 		
-		Jedis tmp_redis = ConnectionRedis.getJedis();
-		
-		String picture_paths = tmp_redis.get(mac_name);
-		
-		if(picture_paths != null) {
-			logger.info("mac_name："+ mac_name +" 对应的picture_paths为：" + picture_paths);
-		}
-		else {
-			logger.info("mac_name："+ mac_name + "不存在");
-		}
-			
-		tmp_redis.close();
-		return picture_paths;
-	}
-	
-	public void delKey(String mac_name) {
-		Jedis tmp_redis = ConnectionRedis.getJedis();
-		
-		if (tmp_redis.get(mac_name) != null) {
-			tmp_redis.del(mac_name);
-		}
-		
-		logger.info("删除key:" + mac_name + "成功");
-		tmp_redis.close();
-	}
-	
-	public void insertKeys(List<String> mac_names, List<String> picture_path_list) {
-		Jedis tmp_redis = ConnectionRedis.getJedis();
-		
-	    String picture_paths = "";
-	    
-	    for(int i = 0; i < picture_path_list.size() - 1; i ++) {
-	    	picture_paths += picture_path_list.get(i) + "\t";
-	    }
-	    
-	    picture_paths += picture_path_list.get(picture_path_list.size() - 1);
-	    
-	    for (String mac_name : mac_names) {
-			tmp_redis.append(mac_name, picture_paths);
+		while (iterator.hasNext()) {
+			Entry<?, ?> entry = (Entry<?, ?>) iterator.next();
+			String mac_name = (String) entry.getKey();
+			String picture_paths = (String) entry.getValue();
+			tmp_redis.set(mac_name, picture_paths);
 			tmp_redis.expire(mac_name, 600);
 		}
-	    
 	    tmp_redis.close();
 	    
 	    logger.info("批量插入mac_names成功");
 	}
 	
-	public void insertKey(String mac_name, String picture_paths) {
+	public void insertKeys(List<String> mac_names, String picture_paths) {
 		Jedis tmp_redis = ConnectionRedis.getJedis();
 		
-		if(tmp_redis.get(mac_name) != null) {
-			tmp_redis.del(mac_name);
-		}	
-		
-		tmp_redis.append(mac_name, picture_paths);
-	    tmp_redis.expire(mac_name, 600);
-		
+		for (String mac_name : mac_names) {
+			tmp_redis.set(mac_name, picture_paths);
+		    tmp_redis.expire(mac_name, 600);
+		}
+
+		logger.info("新增keys：" + mac_names.toString() + "成功");
 		tmp_redis.close();
-		
-		logger.info("新增key：" + mac_name + "成功");
 	}
 }
