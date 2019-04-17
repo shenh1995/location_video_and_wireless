@@ -6,16 +6,16 @@ import com.config.OtherConfig;
 import com.messageQueue.Consumer;
 import com.messageQueue.PictureConsumer;
 import com.messageQueue.Storage;
-import com.schedule.MainScheduler;
+import com.schedule.FilterScheduler;
 import com.server.VideoServer;
 import com.server.WirelessServer;
 import com.service.FilterMac;
 
 
 /*
- * @author shenhong
+ * @author shenh
  * @time 2019/03/07
-    * 程序入口
+ * 程序入口
  */
 public class Main {
 
@@ -27,7 +27,7 @@ public class Main {
 		
 		FilterMac.loadFixedMac();
 		
-        MainScheduler.schedulerJob();
+		FilterScheduler.schedulerJob();
 		
 		Consumer consumer = new Consumer(storage);
 		Thread thread = new Thread(consumer);

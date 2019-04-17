@@ -15,6 +15,10 @@ import io.netty.handler.codec.http.HttpResponseEncoder;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.stream.ChunkedWriteHandler;
 
+/**
+ * @author shenh
+ * 视频信息接收端
+ */
 public class VideoServer {
 
 	public void start(int port) throws Exception {
@@ -65,6 +69,4 @@ public class VideoServer {
 	public static void main(String[] args) throws Exception {
 		new VideoServer().start(8091);
 	}
-
-
 }

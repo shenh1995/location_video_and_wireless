@@ -12,9 +12,9 @@ import com.dao.ConnectionRedis;
 
 import redis.clients.jedis.Jedis;
 
-public class MyJob implements Job {
+public class FilterJob implements Job {
 	
-	private static Logger logger = Logger.getLogger(MyJob.class);
+	private static Logger logger = Logger.getLogger(FilterJob.class);
 
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
 
@@ -28,11 +28,11 @@ public class MyJob implements Job {
 				if (jedis.ttl(key) < 15) {
 					String[] macs = jedis.get(key).split("\t");
 					for (String string : macs) {
-						MainScheduler.filterMacSet.add(string);
+						FilterScheduler.filterMacSet.add(string);
 					}
 				}	
 			}
-			 logger.info(MainScheduler.filterMacSet.toString());
+			 logger.info(FilterScheduler.filterMacSet.toString());
 			try {
 				Thread.sleep(40000);
 			} catch (InterruptedException e) {

@@ -14,8 +14,10 @@ import io.netty.handler.codec.http.HttpRequestDecoder;
 import io.netty.handler.codec.http.HttpResponseEncoder;
 import io.netty.handler.codec.http.HttpServerCodec;
 
-/*
- * 用netty实现httpServer
+
+/**
+ * @author shenh
+ * 无线接收端
  */
 public class WirelessServer {
 	
@@ -58,5 +60,4 @@ public class WirelessServer {
 				ch.pipeline().addLast(new WirelessServerHandler());
 		}
 	}
-	
 }
