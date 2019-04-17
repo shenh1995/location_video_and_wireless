@@ -8,4 +8,5 @@ public interface WifiDao {
 
 	public void insertWifi(List<Wifi> wifis);
 	
+	public String getMacsByTimeAndDeviceid(long time, String device_id);
 }

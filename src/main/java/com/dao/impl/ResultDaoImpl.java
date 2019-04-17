@@ -20,6 +20,7 @@ public class ResultDaoImpl implements ResultDao{
 	
 	Logger logger = Logger.getLogger(ResultDaoImpl.class);
 	
+	
 	public void batchInsertIntoResult(HashMap<String, String> mac_name_map_picture_paths) throws SQLException {
 		Connection connection = null;
 		PreparedStatement psts = null;
@@ -114,21 +115,20 @@ public class ResultDaoImpl implements ResultDao{
 		}
 	}
 	
-	public void insertResult(String mac_name, String picture_paths, int status) throws SQLException{
+	public void insertResult(String mac_name, String human_picture_path) throws SQLException{
 		Connection connection = null;
 		PreparedStatement psts = null;
 		try {
 			connection = ConnectionDB.getConnection();
 			
-			String insert_result_sql = "insert into Result (mac_name, picture_paths, status) values(?,?,?)";
+			String insert_result_sql = "insert into Result (mac_name, human_picture_path) values(?,?)";
 			psts = connection.prepareStatement(insert_result_sql);
 			psts.setString(1, mac_name);
-			psts.setString(2, picture_paths);
-			psts.setInt(3, status);
+			psts.setString(2, human_picture_path);
 			
 			psts.executeUpdate();
 			
-			logger.info("插入Result成功，status为：" + status);
+			logger.info("插入Result成功，mac_name为：" + mac_name);
 			
 		} catch (Exception e) {
 			logger.error("插入Result失败");

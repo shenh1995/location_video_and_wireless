@@ -55,7 +55,7 @@ public class RedisHelp {
 		Jedis tmp_redis = ConnectionRedis.getJedis();
 
 		Iterator<?> iterator = mac_name_map_picture_paths.entrySet().iterator();
-		
+
 		while (iterator.hasNext()) {
 			Entry<?, ?> entry = (Entry<?, ?>) iterator.next();
 			String mac_name = (String) entry.getKey();

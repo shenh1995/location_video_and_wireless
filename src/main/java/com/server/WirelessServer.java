@@ -1,8 +1,6 @@
 package com.server;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -10,12 +8,18 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.DelimiterBasedFrameDecoder;
-import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.http.HttpClientCodec;
+import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpRequestDecoder;
+import io.netty.handler.codec.http.HttpResponseEncoder;
+import io.netty.handler.codec.http.HttpServerCodec;
 
-public class Netty {
-
-	public void bind(int port) throws Exception {
+/*
+ * 用netty实现httpServer
+ */
+public class WirelessServer {
+	
+	public void start(int port) throws Exception {
 		//配置服务端的NIO线程组，一个用于服务端接受客户端的连接，另一个用于进行sokcetchannel的网络读写
 		EventLoopGroup bossGroup = new NioEventLoopGroup();
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
@@ -39,13 +43,20 @@ public class Netty {
 	
 	private class ChildChannelHandler extends ChannelInitializer<SocketChannel> {
 
-		@Override
-		protected void initChannel(SocketChannel arg0) throws Exception {
-			//解决粘包和拆包问题，]结束了就行，设置一个包的最大长度为2048
-			ByteBuf delimiter = Unpooled.copiedBuffer("c".getBytes());
-			arg0.pipeline().addLast(new DelimiterBasedFrameDecoder(1024, delimiter));
-			arg0.pipeline().addLast(new StringDecoder());
-			arg0.pipeline().addLast(new ServerHandler());
+			@Override
+			public void initChannel(SocketChannel ch) throws Exception {
+				ch.pipeline().addLast("http-decoder", new HttpRequestDecoder());
+				/**usually we receive http message infragment,if we want full http message,
+				 * we should bundle HttpObjectAggregator and we can get FullHttpRequest。
+				 * 我们通常接收到的是一个http片段，如果要想完整接受一次请求的所有数据，我们需要绑定HttpObjectAggregator，然后我们
+				 * 就可以收到一个FullHttpRequest-是一个完整的请求信息。
+				**/
+				ch.pipeline().addLast("client-codec", new HttpClientCodec());
+				ch.pipeline().addLast("http-encoder", new HttpResponseEncoder());
+				ch.pipeline().addLast("servercodec",new HttpServerCodec());
+				ch.pipeline().addLast("http-aggegator", new HttpObjectAggregator(65536 * 100));
+				ch.pipeline().addLast(new WirelessServerHandler());
 		}
 	}
+	
 }

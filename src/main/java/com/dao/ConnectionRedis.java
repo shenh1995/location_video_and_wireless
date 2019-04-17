@@ -2,8 +2,8 @@ package com.dao;
 
 import org.apache.log4j.Logger;
 
+import com.Test.Test;
 import com.config.RedisConfig;
-import com.test.Test;
 
 import redis.clients.jedis.Jedis;
 

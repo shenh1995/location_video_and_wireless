@@ -24,6 +24,7 @@ public class RedisConfig {
 			redis_host = redisConfig.getProperty("redis_host");
 			port = Integer.parseInt(redisConfig.getProperty("redis_port"));
 			
+			
 			logger.info("加载redis配置文件成功");
 		} catch (FileNotFoundException e) {
 			logger.error("redis配置文件不存在");

@@ -27,7 +27,7 @@ public class HumanPictureDaoImpl implements HumanPictureDao{
 			for (HumanPicture humanPicture : humanPictures) {
 				psts.setString(1, humanPicture.getPicture_path());
 				psts.setString(2, humanPicture.getTime());
-				psts.setInt(3, humanPicture.getDevice_id());
+				psts.setString(3, humanPicture.getDevice_id());
 				psts.addBatch();
 			}
 			psts.executeBatch();

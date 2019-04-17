@@ -24,6 +24,8 @@ public class ConnectionDB {
 		 return connection;
 	}
 	
+	
+	
 	public static void main(String [] args) throws SQLException, PropertyVetoException {
 		Connection connection = getConnection();
 		String sql = "select * from Wifi";

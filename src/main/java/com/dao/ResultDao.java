@@ -8,7 +8,7 @@ import com.pojo.Result;
 
 public interface ResultDao {
 	
-	public void insertResult(String mac_name, String picture_paths, int status) throws SQLException;
+	public void insertResult(String mac_name, String human_picture_path) throws SQLException;
 	
 	public List<Result> getResults(List<String> mac_names) throws SQLException;
 	

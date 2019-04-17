@@ -4,7 +4,7 @@ public class Wifi {
 
 	private String mac_name;
 	private String time;
-	private int device_id;
+	private String device_id;
 
 	public String getMac_name() {
 		return mac_name;
@@ -22,12 +22,13 @@ public class Wifi {
 		this.time = time;
 	}
 
-	public int getDevice_id() {
+	public String getDevice_id() {
 		return device_id;
 	}
 
-	public void setDevice_id(int device_id) {
+	public void setDevice_id(String device_id) {
 		this.device_id = device_id;
 	}
+
 
 }
