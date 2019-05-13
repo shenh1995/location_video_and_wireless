@@ -2,6 +2,10 @@ package com.pojo;
 
 import java.util.List;
 
+/**
+ * @author shenh
+ * 摄像头上传数据类
+ */
 public class CameraWarnFaceInformation {
 
     public int type;

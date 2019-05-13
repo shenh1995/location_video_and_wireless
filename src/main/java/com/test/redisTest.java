@@ -1,9 +1,9 @@
-package com.Test;
+package com.test;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import com.dao.ConnectionRedis;
+import com.db.ConnectionRedis;
 
 import redis.clients.jedis.Jedis;
 
@@ -14,7 +14,6 @@ public class redisTest {
 		Jedis jedis = ConnectionRedis.getJedis();
 		
 		String test = "picture_123";
-		
 		
 		System.out.println(test.substring(8));
 		
@@ -31,7 +30,7 @@ public class redisTest {
         set = jedis.keys("*");  
         for (String key : set) {  
         	jedis.del(key);
-       }  
+      }  
 
         set = jedis.keys("picture_*"); 
         for(String key: set) {

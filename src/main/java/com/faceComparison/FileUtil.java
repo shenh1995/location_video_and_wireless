@@ -1,4 +1,4 @@
-package com.service;
+package com.faceComparison;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;

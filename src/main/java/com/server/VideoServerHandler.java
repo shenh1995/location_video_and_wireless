@@ -7,9 +7,9 @@ import java.util.Base64;
 
 import org.apache.log4j.Logger;
 
-import com.dao.ConnectionRedis;
+import com.Main.Main;
+import com.db.ConnectionRedis;
 import com.google.gson.Gson;
-
 import com.pojo.CameraWarnFaceInformation;
 
 import io.netty.buffer.ByteBuf;
@@ -49,11 +49,15 @@ public class VideoServerHandler extends SimpleChannelInboundHandler<FullHttpRequ
 
 	/**
 	 * @param postData
-	 * @throws IOException 将人脸数据解析为jpg文件，然后按照每个设备一个文件夹存储到对应的文件夹中
+	 * @throws IOException 
+	 * @throws InterruptedException 
+	 * 将人脸数据解析为jpg文件，然后按照每个设备一个文件夹存储到对应的文件夹中
+	 *   存储的格式为设备名/时间.jpg
+	 *   并且在redis中存储一个 （设备名+时间，0）的键值对，代表图片已经存在
 	 */
-	private void parseFaceInformation(String postData) throws IOException {
+	private void parseFaceInformation(String postData) throws IOException, InterruptedException {
 		CameraWarnFaceInformation faceInformation = new Gson().fromJson(postData, CameraWarnFaceInformation.class);
-		System.out.println(postData);
+		logger.info("采集到一张人脸");
 		for (int i = 0; i < faceInformation.faces.size(); i++) {
 			String base64FaceData = faceInformation.faces.get(i);
 			byte[] bitmapBytes = Base64.getDecoder().decode(base64FaceData);
@@ -67,8 +71,7 @@ public class VideoServerHandler extends SimpleChannelInboundHandler<FullHttpRequ
 					new File(fileDirectory + "/" + faceInformation.time + ".jpg"));
 			write.write(bitmapBytes);
 			write.close();
-
-			logger.info("" + faceInformation.cid + "   " + faceInformation.time);
+			
 			Jedis jedis = ConnectionRedis.getJedis();
 			jedis.hset(faceInformation.cid, "" + faceInformation.time, "0");
 			ConnectionRedis.releaseJedis(jedis);

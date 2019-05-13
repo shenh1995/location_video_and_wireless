@@ -7,6 +7,10 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+/**
+ * @author shenh
+ * 其他配置参数
+ */
 public class OtherConfig {
 
 	public static int WirelessPort = 0;

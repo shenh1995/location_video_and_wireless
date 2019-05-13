@@ -7,6 +7,10 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+/**
+ * @author shenh
+ * 数据库参数
+ */
 public class JdbcConfig {
 	
 	public static String jdbc_driver = "";

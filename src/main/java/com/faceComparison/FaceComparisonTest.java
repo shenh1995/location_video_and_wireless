@@ -5,11 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.service.Base64Util;
-import com.service.FileUtil;
-import com.service.GsonUtils;
-import com.service.HttpUtil;
-
 
 public class FaceComparisonTest {
 	
@@ -58,7 +53,7 @@ public class FaceComparisonTest {
             String param = GsonUtils.toJson(images);
 
             // 注意这里仅为了简化编码每一次请求都去获取access_token，线上环境access_token有过期时间， 客户端可自行缓存，过期后重新获取。
-            String accessToken = "24.836efa0dc6ee89b572596cc30623375a.2592000.1556421851.282335-15598501";
+            String accessToken = AuthService.getAccessToken();
 
             result = HttpUtil.post(url, accessToken, "application/json", param);
         } catch (Exception e) {
@@ -76,8 +71,8 @@ public class FaceComparisonTest {
 
     public static void main(String[] args) throws InterruptedException {
     	
-    	String imagePath1 = "123/1.jpg";
-    	String imagePath2 = "124/2.jpg";
+    	String imagePath1 = "C:\\Users\\Dell\\Desktop\\1.png";
+    	String imagePath2 = "C:\\Users\\Dell\\Desktop\\2.jpg";
         System.out.println(imagePath1 + " " + imagePath2);
     	double result = FaceComparisonTest.match(imagePath1, imagePath2);
     	System.out.println(result);

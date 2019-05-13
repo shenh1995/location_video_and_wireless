@@ -10,13 +10,12 @@ import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 
-import com.dao.ConnectionDB;
 import com.dao.PictureAndWifiDao;
+import com.db.ConnectionDB;
 
 public class PictureAndWifiDaoImpl implements PictureAndWifiDao{
 	
 	Logger logger = Logger.getLogger(PictureAndWifiDaoImpl.class);
-	
 	
 	/**
 	 * 	获得视频设备id和上传无线设备id的映射关系
@@ -52,6 +51,10 @@ public class PictureAndWifiDaoImpl implements PictureAndWifiDao{
 		return map;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.dao.PictureAndWifiDao#insertRelationVideoDeviceidAndWifiId(int, int)
+	 * 将无线设备id和摄像头设备id的映射关系存储到数据库中
+	 */
 	public void insertRelationVideoDeviceidAndWifiId(int wifi_device_id, int video_device_id) {
 		try {
 			Connection connection = ConnectionDB.getConnection();

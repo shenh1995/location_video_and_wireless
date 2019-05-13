@@ -7,11 +7,14 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+/**
+ * @author shenh
+ * redis配置参数
+ */
 public class RedisConfig {
 	
 	public static String redis_host = "";
 	public static int port = 0;
-
 	private static Properties redisConfig = new Properties();
 	
 	private static Logger logger = Logger.getLogger(RedisConfig.class);
@@ -23,8 +26,6 @@ public class RedisConfig {
 			
 			redis_host = redisConfig.getProperty("redis_host");
 			port = Integer.parseInt(redisConfig.getProperty("redis_port"));
-			
-			
 			logger.info("加载redis配置文件成功");
 		} catch (FileNotFoundException e) {
 			logger.error("redis配置文件不存在");
@@ -34,6 +35,4 @@ public class RedisConfig {
 			e.printStackTrace();
 		}
 	}
-
-
 }

@@ -7,6 +7,10 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+/**
+ * @author shenh
+ * 人脸对比 参数
+ */
 public class FaceApiConfig {
 
 	public static String APP_ID = "";
@@ -15,7 +19,6 @@ public class FaceApiConfig {
 	private static Properties faceApiConfig = new Properties();
 	
 	private static Logger logger = Logger.getLogger(FaceApiConfig.class);
-	
 	
 	static {
 		try {

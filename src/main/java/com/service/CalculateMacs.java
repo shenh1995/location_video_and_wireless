@@ -11,6 +11,9 @@ public class CalculateMacs {
 	 * @return
 	 */
 	public String getTwoMacsIntersection(String macs1, String macs2) {
+		if(macs1 == null || macs2 == null || macs1.length() <=5 || macs2.length() <= 5)
+			return "";
+		
 		String [] mac1Split = macs1.split("\t");
 		String [] mac2Split = macs2.split("\t");
 		

@@ -1,5 +1,9 @@
 package com.pojo;
 
+/**
+ * @author shenh
+ * 人脸类
+ */
 public class HumanPicture {
 
 	private String picture_path;
@@ -29,6 +33,5 @@ public class HumanPicture {
 	public void setDevice_id(String device_id) {
 		this.device_id = device_id;
 	}
-
 
 }

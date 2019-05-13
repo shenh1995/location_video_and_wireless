@@ -7,13 +7,13 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.Main.Main;
-import com.dao.ConnectionRedis;
 import com.dao.HumanPictureDao;
 import com.dao.PictureAndWifiDao;
 import com.dao.WifiDao;
 import com.dao.impl.HumanPictureDaoImpl;
 import com.dao.impl.PictureAndWifiDaoImpl;
 import com.dao.impl.WifiDaoImpl;
+import com.db.ConnectionRedis;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.pojo.HumanPicture;
@@ -79,10 +79,11 @@ public class Consumer implements Runnable{
 		try {
 			
 			while (true) {
+				//从阻塞队列中弹出以及边界考虑
 				String product = storage.pop();
 				if(product == "")
 					continue;
-				System.out.println("" + product);
+				
 				Sniffer sniffer = gson.fromJson(product, Sniffer.class);
 				List<SignalFeature> data = sniffer.getData();
 				
@@ -91,6 +92,7 @@ public class Consumer implements Runnable{
 				
 				String value = "";
 				
+				//过滤掉信号强度弱的mac，这个参数看具体的情况
 				for(int i = 0; i < data.size() - 1; i ++) {
 					if(data.get(i).getRssi() <= 58) {
 						value += data.get(i).getMac() + "\t";
@@ -100,16 +102,17 @@ public class Consumer implements Runnable{
 					value += data.get(data.size() - 1).getMac();
 				}
 				
+				
 				if (jedis.get(sniffer.getSn() + "_" + sniffer.getType()) != null) {
 					String result = calculateMacs.getTwoMacsUnion(jedis.get(sniffer.getSn() + "_" + sniffer.getType()), value);
 					int remainTime = jedis.ttl(sniffer.getSn() + "_" + sniffer.getType()).intValue();
 					
 					if(remainTime < 15) {
+						//这里看当前时间往前一分钟内有没有人脸进来
 						String video_device_id = wifi_video_device_map.get(sniffer.getSn());
 						long current_time = Long.parseLong(sniffer.data.get(0).getStimestamp());
 						List<String> picturePathList = new ArrayList<String>();
 						boolean hasPicture = false;
-					//	logger.info(video_device_id + "  " +current_time);
 						for(long i = current_time; i > current_time - 60; i --) {
 							
 							if(jedis.hget(video_device_id, "" + i) != null) {
@@ -118,12 +121,13 @@ public class Consumer implements Runnable{
 								hasPicture = true;
 							}
 						}
+						//如果有人脸进来
 						if(hasPicture == true) {
 							insertInfoToDatabase(picturePathList, video_device_id, result, sniffer.getSn(), current_time);
 							
 							for (String string : picturePathList) {
 								jedis.set("picture_" + string, result);
-							//	logger.info("picture_" + string + " " + result);
+								logger.info("picture_" + string + " " + result);
 								Main.picure_storage.push(string);
 							}
 							
@@ -136,10 +140,11 @@ public class Consumer implements Runnable{
 					}
 					
 				}else {
+					//滑动窗口为60
 					jedis.set(sniffer.getSn() + "_" + sniffer.getType(), value);
 					jedis.expire(sniffer.getSn() + "_" + sniffer.getType(), 60);
 				}
-//				System.out.println("消费者：\t" + sniffer.getSn() + "\t"+ jedis.get(sniffer.getSn() + "_" + sniffer.getType()));
+				logger.info("消费者：\t" + sniffer.getSn() + "\t"+ jedis.get(sniffer.getSn() + "_" + sniffer.getType()));
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();

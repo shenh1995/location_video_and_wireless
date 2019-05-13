@@ -8,14 +8,18 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.dao.ConnectionDB;
 import com.dao.HumanPictureDao;
+import com.db.ConnectionDB;
 import com.pojo.HumanPicture;
 
 public class HumanPictureDaoImpl implements HumanPictureDao{
 
 	Logger logger = Logger.getLogger(HumanPictureDaoImpl.class);
 	
+	/* (non-Javadoc)
+	 * @see com.dao.HumanPictureDao#insertHumanPicture(java.util.List)
+	 * 将一组人脸存储到数据库中
+	 */
 	public void insertHumanPicture(List<HumanPicture> humanPictures) {
 		try {
 			Connection connection = ConnectionDB.getConnection();

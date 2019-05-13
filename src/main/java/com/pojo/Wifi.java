@@ -1,5 +1,10 @@
 package com.pojo;
 
+
+/**
+ * @author shenh
+ * Wifi类
+ */
 public class Wifi {
 
 	private String mac_name;
@@ -29,6 +34,5 @@ public class Wifi {
 	public void setDevice_id(String device_id) {
 		this.device_id = device_id;
 	}
-
 
 }

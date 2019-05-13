@@ -10,14 +10,18 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.dao.ConnectionDB;
 import com.dao.WifiDao;
+import com.db.ConnectionDB;
 import com.pojo.Wifi;
 
 public class WifiDaoImpl implements WifiDao{
 
 	Logger logger = Logger.getLogger(WifiDaoImpl.class);
 	
+	/* (non-Javadoc)
+	 * @see com.dao.WifiDao#insertWifi(java.util.List)
+	 * 将采集到的一组wifi数据存储到数据库中
+	 */
 	public void insertWifi(List<Wifi> wifis) {
 		try {
 			Connection connection = ConnectionDB.getConnection();
@@ -47,8 +51,9 @@ public class WifiDaoImpl implements WifiDao{
 		
 	}
 
-	/*
-	 *    根据时间和设备id返回所有的mac
+	/* (non-Javadoc)
+	 * @see com.dao.WifiDao#getMacsByTimeAndDeviceid(long, java.lang.String)
+	 * 根据时间和设备的id返回所有的mac名字
 	 */
 	public String getMacsByTimeAndDeviceid(long time, String device_id) {
 		 

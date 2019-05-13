@@ -12,14 +12,13 @@ import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 
-import com.dao.ConnectionDB;
 import com.dao.ResultDao;
+import com.db.ConnectionDB;
 import com.pojo.Result;
 
 public class ResultDaoImpl implements ResultDao{
 	
 	Logger logger = Logger.getLogger(ResultDaoImpl.class);
-	
 	
 	public void batchInsertIntoResult(HashMap<String, String> mac_name_map_picture_paths) throws SQLException {
 		Connection connection = null;

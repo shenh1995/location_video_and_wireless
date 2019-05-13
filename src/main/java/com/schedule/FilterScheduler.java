@@ -38,6 +38,10 @@ public class FilterScheduler {
 
     }
 
+    /**
+     * @throws SchedulerException
+     * 这里是每天凌晨1点到5点整点触发
+     */
     public static void schedulerJob() throws SchedulerException{
     	logger.info("定时器开始启动....");
         //创建任务

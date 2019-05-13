@@ -29,6 +29,15 @@ public class AuthService {
 		System.out.println(getAuth(clientId, clientSecret));
 	}
 
+	
+	public static String getAccessToken() {
+		// 官网获取的 API Key 更新为你注册的
+		String clientId = "SpzOXvHeMR1ROrUYhR7aoh2q";
+		// 官网获取的 Secret Key 更新为你注册的
+		String clientSecret = "GlirA7NhQeBs86EV7o2phCG5XFZqiGSU";
+		return getAuth(clientId, clientSecret);
+	}
+	
 	/**
 	 * 获取API访问token 该token有一定的有效期，需要自行管理，当失效时需重新获取.
 	 * 

@@ -1,4 +1,4 @@
-package com.service;
+package com.faceComparison;
 
 /**
  * Base64 工具类

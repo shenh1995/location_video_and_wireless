@@ -27,7 +27,7 @@ public class WirelessServerHandler extends SimpleChannelInboundHandler<FullHttpR
 		ByteBuf jsonBuf = msg.content();
 		String jsonStr = jsonBuf.toString(CharsetUtil.UTF_8);
 		if(!jsonStr.contains("blue")) {
-			//System.out.println(jsonStr);
+			//把采集的无线数据信息放入到无线数据仓库中
 			Main.storage.push(jsonStr); 
 		}
 		ctx.close();

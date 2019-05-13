@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2017 Baidu, Inc. All Rights Reserved.
  */
-package com.service;
+package com.faceComparison;
 
 import java.lang.reflect.Type;
 

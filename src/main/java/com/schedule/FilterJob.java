@@ -8,7 +8,7 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import com.dao.ConnectionRedis;
+import com.db.ConnectionRedis;
 
 import redis.clients.jedis.Jedis;
 

@@ -1,4 +1,4 @@
-package com.dao;
+package com.db;
 
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
@@ -11,6 +11,12 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public class ConnectionDB {
   
+	/**
+	 * @return
+	 * @throws SQLException
+	 * @throws PropertyVetoException
+	 * 获取数据库连接
+	 */
 	public static Connection getConnection() throws SQLException, PropertyVetoException {
 		
 		ComboPooledDataSource comb = new ComboPooledDataSource();

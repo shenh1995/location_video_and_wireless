@@ -8,7 +8,6 @@ import com.config.MqConfig;
 /**
  * @author shenh
  *	 设置一个阻塞队列作为消息队列
- *
  */
 public class Storage {
 

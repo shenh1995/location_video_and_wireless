@@ -2,6 +2,11 @@ package com.pojo;
 
 import java.util.List;
 
+
+/**
+ * @author shenh
+ * 无线采集设备上传数据
+ */
 public class Sniffer {
 
 	public String sn;   //设备编号

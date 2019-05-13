@@ -1,5 +1,10 @@
 package com.pojo;
 
+
+/**
+ * @author shenh
+ * 结果类
+ */
 public class Result {
 
 	public String mac_name;

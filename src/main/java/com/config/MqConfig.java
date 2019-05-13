@@ -7,13 +7,16 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+/**
+ * @author shenh
+ * 消息队列参数
+ */
 public class MqConfig {
 
 	public static int MQ_SIZE = 0;
 	private static Properties mqConfig = new Properties();
 	
 	private static Logger logger = Logger.getLogger(MqConfig.class);
-	
 	
 	static {
 		try {
